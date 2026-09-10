@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111">
+<title>Media Saver</title>
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/static/icons/192.png">
+<link rel="apple-touch-icon" href="/static/icons/192.png">
+<link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+<h1>Media Saver</h1>
+
+<div class="card">
+  <div class="row"><span class="status" id="st-login">…</span> <span>Logged in</span></div>
+  <div class="row"><span class="status" id="st-health">…</span> <span>Server <span class="muted small" id="health-detail"></span></span></div>
+  <div class="row"><span class="status" id="st-install">…</span> <span id="install-text">Installed</span> <button id="install-btn" class="hidden" type="button">Install</button></div>
+</div>
+
+<h2>Setup</h2>
+<div class="card">
+  <ol class="checklist">
+    <li>Log in (done if you can read this).</li>
+    <li>Install: Chrome menu ⋮ → <b>Add to Home screen</b> / <b>Install app</b>. The share-sheet entry only appears after installing.</li>
+    <li>In Twitter/X or TikTok, tap Share → <b>Media Saver</b>.</li>
+    <li>If Chrome asks to allow multiple downloads, allow it (remembered per site).</li>
+  </ol>
+  <p class="muted small">Files land in <code>Download/</code> and show up in your gallery.</p>
+</div>
+
+<h2>Settings</h2>
+<div class="card">
+  <label class="toggle"><span>Also keep the .mp4 for gifs</span><input type="checkbox" id="opt-gif-mp4" checked></label>
+  <label class="toggle"><span>Zip multi-item posts <span class="muted small">(no permission prompt, manual unzip)</span></span><input type="checkbox" id="opt-zip"></label>
+</div>
+
+<h2>Test with a link</h2>
+<div class="card">
+  <form id="test-form" class="row">
+    <input type="url" id="test-url" placeholder="https://x.com/…/status/… or tiktok link" required style="flex:1">
+    <button type="submit">Save</button>
+  </form>
+  <p class="muted small">Runs the exact share flow in this tab.</p>
+  <p class="small"><a href="/share-debug">Share-target debug page</a> · <a href="/logout" onclick="fetch('/logout',{method:'POST'}).then(function(){location='/login'});return false">Log out</a></p>
+</div>
+<script src="/static/app.js"></script>
+</body>
+</html>

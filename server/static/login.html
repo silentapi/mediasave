@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111">
+<title>Media Saver · Login</title>
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/static/icons/192.png">
+<link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+<h1>Media Saver</h1>
+<div class="card">
+  <p>Enter the access key to use this site.</p>
+  <!--ERROR-->
+  <form method="post" action="/login" id="f">
+    <input type="hidden" name="next" id="next" value="/">
+    <label>Access key
+      <input type="password" name="key" id="key" autocomplete="current-password" autofocus required>
+    </label>
+    <button type="submit">Log in</button>
+  </form>
+</div>
+<p class="muted small">The cookie lasts a year. After logging in, install the app from Chrome's menu to get the share-sheet entry.</p>
+<script>
+(function(){
+  var p=new URLSearchParams(location.search).get('next')||'/';
+  if(p.charAt(0)!=='/'||p.charAt(1)==='/')p='/';
+  document.getElementById('next').value=p;
+  document.getElementById('f').action='/login?next='+encodeURIComponent(p);
+})();
+</script>
+</body>
+</html>

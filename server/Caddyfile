@@ -1,0 +1,28 @@
+# SITE_ADDRESS comes from .env (e.g. media.example.com). Use "localhost" for a local self-signed setup.
+{$SITE_ADDRESS:localhost} {
+	encode gzip
+
+	# Static shell straight from disk; everything else to the app.
+	handle /static/* {
+		root * /srv
+		file_server
+		header Cache-Control "public, max-age=3600"
+	}
+
+	handle {
+		reverse_proxy app:8000 {
+			# Long media streams: don't buffer, generous timeouts.
+			flush_interval -1
+			transport http {
+				read_timeout 600s
+				write_timeout 600s
+			}
+		}
+	}
+
+	header {
+		X-Content-Type-Options nosniff
+		Referrer-Policy no-referrer
+		-Server
+	}
+}

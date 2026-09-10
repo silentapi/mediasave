@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111">
+<title>Media Saver · share debug</title>
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+<h1>Share-target debug</h1>
+<p class="muted small">Answers spec §8.3–8.4. Findings are also POSTed to the server log (<code>share-debug:</code> lines). To use this page as the share target temporarily, set <code>action</code> in the manifest to <code>/share-debug</code>, redeploy, reinstall.</p>
+
+<h2>1 · Query params received</h2>
+<div class="card"><pre id="params">(none)</pre></div>
+
+<h2>2 · Environment</h2>
+<div class="card"><pre id="env"></pre></div>
+
+<h2>3 · Multi-download test</h2>
+<div class="card">
+  <p class="small">Each button triggers 3 tiny text-file downloads via <code>&lt;a download&gt;.click()</code>. Watch how many land in Chrome's download tray and whether a "download multiple files" prompt appears.</p>
+  <div class="row">
+    <button type="button" data-stagger="0">3 files, no stagger</button>
+    <button type="button" data-stagger="400">3 files, 400 ms</button>
+    <button type="button" data-stagger="1000">3 files, 1 s</button>
+  </div>
+  <div class="row" style="margin-top:.5rem">
+    <button type="button" class="secondary" id="nav-one">1 file via location.href</button>
+  </div>
+  <pre id="dl-log">(no downloads yet)</pre>
+</div>
+
+<h2>4 · window.close() test</h2>
+<div class="card">
+  <p class="small">Tap and see whether the window closes (only works when this tab was opened by the share sheet / script, not typed).</p>
+  <button type="button" id="close-btn">Try window.close()</button>
+  <pre id="close-log">opener: <span id="opener"></span></pre>
+</div>
+
+<h2>5 · Simulate a share</h2>
+<div class="card">
+  <form id="sim" class="row">
+    <input type="text" id="sim-text" placeholder="text param, e.g. 'look at this https://x.com/…'" style="flex:1">
+    <button type="submit">Open /share</button>
+  </form>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var p=new URLSearchParams(location.search), obj={};
+  p.forEach(function(v,k){obj[k]=v});
+  var hasParams=Object.keys(obj).length>0;
+  if(hasParams)$('params').textContent=JSON.stringify(obj,null,2);
+  var standalone=matchMedia('(display-mode: standalone)').matches;
+  var env={
+    ua:navigator.userAgent, displayMode:standalone?'standalone':'browser',
+    referrer:document.referrer||'(none)', historyLength:history.length,
+    opener:!!window.opener, href:location.href.slice(0,300), time:new Date().toISOString()
+  };
+  $('env').textContent=JSON.stringify(env,null,2);
+  $('opener').textContent=String(!!window.opener);
+  function post(kind,data){
+    try{fetch('/v1/debug/log',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({kind:kind},data))})}catch(e){}
+  }
+  if(hasParams)post('share-params',{params:obj,env:env});
+  function dl(n,name){var a=document.createElement('a');a.href='/v1/debug/file/'+n+'?t='+Date.now();a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){a.remove()},1000)}
+  var log=[];
+  function logLine(s){log.push(new Date().toISOString().slice(11,23)+' '+s);$('dl-log').textContent=log.join('\n')}
+  document.querySelectorAll('button[data-stagger]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var st=+b.dataset.stagger;logLine('start 3 files stagger='+st+'ms');
+      [1,2,3].forEach(function(n,i){setTimeout(function(){dl(n,'mediasaver-test-'+n+'.txt');logLine('clicked #'+n)},i*st)});
+      post('multi-download',{stagger:st});
+    });
+  });
+  $('nav-one').addEventListener('click',function(){logLine('location.href → file 1');location.href='/v1/debug/file/1?t='+Date.now()});
+  $('close-btn').addEventListener('click',function(){
+    post('close-attempt',{});
+    var t=Date.now();
+    try{window.close()}catch(e){$('close-log').textContent+='\nerror: '+e}
+    setTimeout(function(){$('close-log').textContent+='\nstill open after '+(Date.now()-t)+' ms';post('close-result',{closed:false})},500);
+  });
+  $('sim').addEventListener('submit',function(e){e.preventDefault();location.href='/share?text='+encodeURIComponent($('sim-text').value)});
+})();
+</script>
+</body>
+</html>

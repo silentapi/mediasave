@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111">
+<title>Media Saver</title>
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/static/icons/192.png">
+<style>
+html,body{margin:0;background:#111;color:#eee;font:17px/1.4 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+body{padding:1.25rem;max-width:32rem;margin:0 auto;text-align:center}
+#status{font-size:1.4rem;margin:1.5rem 0 .5rem;min-height:1.6em}
+#detail{color:#9a9a9a;min-height:1.4em}
+#hint{color:#9a9a9a;font-size:.9rem;margin-top:1rem}
+.spin{display:inline-block;width:1em;height:1em;border:3px solid #444;border-top-color:#4f9cff;border-radius:50%;animation:s .8s linear infinite;vertical-align:-.15em;margin-right:.4em}
+@keyframes s{to{transform:rotate(360deg)}}
+ul#items{list-style:none;padding:0;margin:1rem 0;text-align:left}
+ul#items li{padding:.35rem .6rem;border-bottom:1px solid #222;font-size:.9rem;display:flex;justify-content:space-between;gap:.5rem}
+ul#items li span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ok{color:#3ddc84}.err{color:#ff6b6b}
+button{padding:.7rem 1.4rem;border-radius:8px;border:0;background:#4f9cff;color:#fff;font-size:1rem;margin:.5rem .25rem}
+button.secondary{background:#333}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div id="status"><span class="spin"></span>Saving…</div>
+<div id="detail"></div>
+<ul id="items"></ul>
+<div id="actions" class="hidden">
+  <button id="retry">Retry</button>
+  <a href="/"><button class="secondary" type="button">Open app</button></a>
+</div>
+<p id="hint"></p>
+<script src="/static/share.js"></script>
+</body>
+</html>
