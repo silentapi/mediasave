@@ -26,9 +26,44 @@ Running log of choices the spec left open ("decide") and results of the checks i
 
 ## §8 verifications (before provider code)
 
-### 8.1 yt-dlp Twitter syndication token — TODO (milestone 2 prerequisite)
+### 8.1 yt-dlp Twitter syndication token — VERIFIED 2026-09-10 (yt-dlp 2026.08.19)
 
-### 8.2 yt-dlp TikTok from a datacenter IP; photo-mode shape; `http_headers` — TODO (milestone 2 prerequisite)
+Source: `yt_dlp/extractor/twitter.py`, `TwitterIE._generate_syndication_token`:
+
+```python
+# ((Number(twid) / 1e15) * Math.PI).toString(36).replace(/(0+|\.)/g, '')
+translation = str.maketrans(dict.fromkeys('0.'))
+return js_number_to_string((int(twid) / 1e15) * math.pi, 36).translate(translation)
+```
+
+- `js_number_to_string` lives in `yt_dlp.jsinterp` (a faithful port of JS `Number.prototype.toString(radix)`, including rounding). We import it from there and keep a small fallback implementation in case it moves.
+- yt-dlp calls `GET https://cdn.syndication.twimg.com/tweet-result?id=<id>&token=<t>` with `User-Agent: Googlebot`. Tested live from this sandbox with that UA: works. (Spec said "browser-like UA"; we use Googlebot like yt-dlp because that is what is known to work, with the browser UA as a retry.)
+- Response shape confirmed live (fixtures recorded under `server/tests/fixtures/twitter_*.json`):
+  - `__typename: "Tweet"` with `user.screen_name`, `text`, `id_str`, optional `mediaDetails[]`, plus convenience `photos[]` / `video` keys.
+  - `mediaDetails[].type` ∈ `photo | video | animated_gif`.
+  - `photo`: `media_url_https` (e.g. `https://pbs.twimg.com/media/XXXX.jpg`), `original_info.{width,height}`. Full-size URL = `media_url_https` with `?format=<ext>&name=orig` (spec §3.6).
+  - `video`: `video_info.variants[]` with `content_type` (`application/x-mpegURL` or `video/mp4`) and `bitrate`; pick highest-bitrate mp4. `video_info.duration_millis`, `original_info.{width,height}`.
+  - `animated_gif`: `video_info.variants` = exactly one `video/mp4` with `bitrate: 0` (e.g. `https://video.twimg.com/tweet_video/<id>.mp4`), `original_info.{width,height}`, no `duration_millis`. This is the source for the gif conversion.
+  - Deleted / unavailable / (some) protected tweets: `{"__typename": "TweetTombstone", "tombstone": {...}}` → `not_found` (we also check the tombstone text for "protected"/"private" wording → `private` → yt-dlp fallback with `COOKIES_PATH` if set).
+  - Quote tweets: `quoted_tweet.mediaDetails` is present; we ignore it (spec §3.6) and return `no_media` if the outer tweet has none.
+  - Tweets with no media: `mediaDetails` absent.
+- Age-restricted / "possibly sensitive" tweets are returned by the syndication endpoint without login (`possibly_sensitive: true` in the JSON).
+
+### 8.2 yt-dlp TikTok — PARTIALLY VERIFIED (source read; live check deferred to the droplet)
+
+Source: `yt_dlp/extractor/tiktok.py` (2026.08.19):
+
+- `TikTokIE._VALID_URL` matches only `/@user/video/<id>`, `/embed/<id>`, `/share/video/<id>`. **`/photo/<id>` URLs are not matched and yt-dlp has no image-post handling at all** (grep for image/photo/slideshow in the extractor: only comments about "audio-only slideshows"). Slideshow posts come back as an audio-only `m4a`/`mp3` format via the web path.
+  → **Decision:** for photo-mode we reuse yt-dlp's page fetch (`TikTokIE._extract_web_data_and_status(url, id)`, which handles the impersonated request and the WAF JS challenge) and read `itemStruct.imagePost.images[].imageURL.urlList[]` ourselves (widest `imageWidth`), falling back to a direct fetch of `__UNIVERSAL_DATA_FOR_REHYDRATION__` if that private method disappears. The exact `imagePost` key names will be confirmed against a real photo post on the droplet in milestone 4 (need a sample link).
+- Default path is the **web page** (`_extract_web_data_and_status`): downloads `https://www.tiktok.com/@<user or _>/video/<id>` with `impersonate=True`, parses `<script id="__UNIVERSAL_DATA_FOR_REHYDRATION__">` → `__DEFAULT_SCOPE__['webapp.video-detail']` (`statusCode`, `itemInfo.itemStruct`). If the WAF returns a challenge page it solves a sha256 proof-of-work in Python and sets `_wafchallengeid`-style cookies, then refetches.
+- Status codes: `10216`/`10222` → login required (private post / private account) → we map to `private`; `10204` → "IP address is blocked" → we map to `private` with the cookies hint; a `/login` redirect → `private`; `isContentClassified` without `video` → login required → `private`.
+- The app API path (`_extract_aweme_app`, `api16-normal-c-useast1a.tiktokv.com/aweme/v1/multi/aweme/detail/`) is only used when the user supplies `app_info` extractor args; not used by default.
+- Formats (`_extract_web_formats`): `bitrateInfo[].PlayAddr.UrlList` (format ids like `h264_540p_1234`, `bytevc1_720p_…`; `bytevc2` marked UNPLAYABLE), the `play` format from `video.playAddr`, and `download` (`video.downloadAddr`, **watermarked**, preference -2). All are `ext: mp4`. Sort fields `('quality', 'codec', 'size', 'br')`.
+  → **Decision:** "best watermark-free mp4" = highest yt-dlp-sorted format with `vcodec != 'none'`, `acodec != 'none'`, `format_note` not `watermarked`/`UNPLAYABLE`, and `vcodec` in `{h264, avc1}` first (h265/`bytevc1` second, since some bytevc1 URLs 404 and phones' gallery apps handle h264 best). `info['formats'][-1]` is yt-dlp's best; we re-filter rather than trust it blindly.
+- `http_headers`: set at the **info-dict level**, `{'Referer': <webpage url>}` (formats do not carry their own). The dl token carries `Referer` plus a browser `User-Agent`; the media CDNs (`v16-webapp-prime.tiktok.com` etc.) are IP-bound and short-lived, which is fine since resolve and proxy run from the same host within seconds.
+- **Impersonation dependency:** without `curl_cffi`, yt-dlp warns "attempting impersonation, but no impersonate target is available" and TikTok's WAF returned a 537-byte page → `Unexpected response from webpage request`. So `curl_cffi` is effectively required.
+  → **Decision:** add `curl_cffi` to `requirements.txt` (yt-dlp's official `yt-dlp[curl-cffi]` extra; a known-good, wheel-only dependency). This is the one addition beyond the spec's dependency list; without it TikTok does not work at all.
+- **Live check from a datacenter IP could not be completed in the build sandbox:** its egress goes through a TLS-intercepting proxy that resets curl-impersonate handshakes (`curl: (35) Recv failure`). Verification "from the droplet" is scheduled as the first step of milestone 4 (`scripts/smoke.sh` with `TT_VIDEO`/`TT_PHOTO`). If the droplet IP is blocked (`10204`), the fallback is the cookies workflow: export `cookies.txt` from a logged-in browser, mount it read-only, set `COOKIES_PATH`.
 
 ### 8.3 Web Share Target on Android Chrome — TODO (needs deployed `/share-debug`)
 

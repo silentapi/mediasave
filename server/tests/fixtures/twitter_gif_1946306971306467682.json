@@ -1,0 +1,147 @@
+{
+ "__typename": "Tweet",
+ "favorite_count": 141,
+ "lang": "en",
+ "possibly_sensitive": false,
+ "created_at": "2025-07-18T20:31:57.000Z",
+ "display_text_range": [
+  0,
+  179
+ ],
+ "entities": {
+  "media": [
+   {
+    "display_url": "pic.x.com/GzFj9bdbu6",
+    "expanded_url": "https://x.com/ChaoticVoicesYT/status/1946306971306467682/photo/1",
+    "indices": [
+     180,
+     203
+    ],
+    "url": "https://t.co/GzFj9bdbu6"
+   }
+  ],
+  "user_mentions": [
+   {
+    "id_str": "998313893725290496",
+    "indices": [
+     15,
+     27
+    ],
+    "name": "\ud835\ude00\ud835\uddee\ud835\uddf9\ud835\ude01\ud835\ude06\ud835\ude00\ud835\uddfd\ud835\uddff\ud835\uddfc\ud835\ude02\ud835\ude01",
+    "screen_name": "saltysprout"
+   },
+   {
+    "id_str": "1126912568574922753",
+    "indices": [
+     51,
+     61
+    ],
+    "name": "Mick",
+    "screen_name": "Mick19988"
+   }
+  ]
+ },
+ "id_str": "1946306971306467682",
+ "text": "I commissioned @saltysprout for an animated gif of @Mick19988 's Krieger and Ms. Citizen.\n\nIt turned out exactly how I imagined it. Thanks a TON! I shall cherish it forever. &lt;3 https://t.co/GzFj9bdbu6",
+ "user": {
+  "id_str": "1661392638178734081",
+  "name": "ChaoticVoices",
+  "screen_name": "ChaoticVoicesYT",
+  "is_blue_verified": false,
+  "profile_image_shape": "Circle",
+  "verified": false,
+  "profile_image_url_https": "https://pbs.twimg.com/profile_images/1661695166720212993/mTT7DrXk_normal.jpg"
+ },
+ "edit_control": {
+  "edit_tweet_ids": [
+   "1946306971306467682"
+  ],
+  "editable_until_msecs": "1752874317000",
+  "edits_remaining": "5",
+  "is_edit_eligible": true
+ },
+ "mediaDetails": [
+  {
+   "display_url": "pic.x.com/GzFj9bdbu6",
+   "expanded_url": "https://x.com/ChaoticVoicesYT/status/1946306971306467682/photo/1",
+   "ext_media_availability": {
+    "status": "Available"
+   },
+   "indices": [
+    180,
+    203
+   ],
+   "media_url_https": "https://pbs.twimg.com/tweet_video_thumb/GwKrzZTXkAEBxiw.jpg",
+   "original_info": {
+    "focus_rects": [],
+    "height": 586,
+    "width": 800
+   },
+   "sizes": {
+    "large": {
+     "h": 586,
+     "resize": "fit",
+     "w": 800
+    },
+    "medium": {
+     "h": 586,
+     "resize": "fit",
+     "w": 800
+    },
+    "small": {
+     "h": 498,
+     "resize": "fit",
+     "w": 680
+    },
+    "thumb": {
+     "h": 150,
+     "resize": "crop",
+     "w": 150
+    }
+   },
+   "type": "animated_gif",
+   "url": "https://t.co/GzFj9bdbu6",
+   "video_info": {
+    "aspect_ratio": [
+     400,
+     293
+    ],
+    "variants": [
+     {
+      "bitrate": 0,
+      "content_type": "video/mp4",
+      "url": "https://video.twimg.com/tweet_video/GwKrzZTXkAEBxiw.mp4"
+     }
+    ]
+   }
+  }
+ ],
+ "photos": [],
+ "video": {
+  "aspectRatio": [
+   400,
+   293
+  ],
+  "contentType": "gif",
+  "durationMs": 0,
+  "mediaAvailability": {
+   "status": "available"
+  },
+  "poster": "https://pbs.twimg.com/tweet_video_thumb/GwKrzZTXkAEBxiw.jpg",
+  "variants": [
+   {
+    "type": "video/mp4",
+    "src": "https://video.twimg.com/tweet_video/GwKrzZTXkAEBxiw.mp4"
+   }
+  ],
+  "videoId": {
+   "type": "tweet",
+   "id": "1946306971306467682"
+  },
+  "viewCount": 0
+ },
+ "conversation_count": 0,
+ "news_action_type": "conversation",
+ "isEdited": false,
+ "isStaleEdit": false
+}

@@ -1,0 +1,420 @@
+{
+ "__typename": "Tweet",
+ "favorite_count": 15894,
+ "lang": "en",
+ "possibly_sensitive": false,
+ "created_at": "2023-02-08T10:57:39.000Z",
+ "display_text_range": [
+  0,
+  64
+ ],
+ "entities": {
+  "media": [
+   {
+    "display_url": "pic.x.com/jEujeTYpiz",
+    "expanded_url": "https://x.com/Johnnybull3ts/status/1623274856664948736/video/1",
+    "indices": [
+     65,
+     88
+    ],
+    "url": "https://t.co/jEujeTYpiz"
+   }
+  ]
+ },
+ "id_str": "1623274856664948736",
+ "text": "Me after going viral to over 30million people: \n \nWhoopsie-daisy https://t.co/jEujeTYpiz",
+ "user": {
+  "id_str": "2982957180",
+  "name": "Johnny Bullets @ Dokomi 2026!",
+  "screen_name": "Johnnybull3ts",
+  "is_blue_verified": false,
+  "profile_image_shape": "Circle",
+  "verified": false,
+  "profile_image_url_https": "https://pbs.twimg.com/profile_images/1533043851815952385/z1hOcMDZ_normal.jpg"
+ },
+ "edit_control": {
+  "edit_tweet_ids": [
+   "1623274856664948736"
+  ],
+  "editable_until_msecs": "1675855659000",
+  "edits_remaining": "5",
+  "is_edit_eligible": false
+ },
+ "mediaDetails": [
+  {
+   "additional_media_info": {},
+   "display_url": "pic.x.com/jEujeTYpiz",
+   "expanded_url": "https://x.com/Johnnybull3ts/status/1623274856664948736/video/1",
+   "ext_media_availability": {
+    "status": "Available"
+   },
+   "indices": [
+    65,
+    88
+   ],
+   "media_url_https": "https://pbs.twimg.com/ext_tw_video_thumb/1623274794488659969/pu/img/2DFy7Je9xBJXIZW8.jpg",
+   "original_info": {
+    "focus_rects": [],
+    "height": 1278,
+    "width": 720
+   },
+   "sizes": {
+    "large": {
+     "h": 1278,
+     "resize": "fit",
+     "w": 720
+    },
+    "medium": {
+     "h": 1200,
+     "resize": "fit",
+     "w": 676
+    },
+    "small": {
+     "h": 680,
+     "resize": "fit",
+     "w": 383
+    },
+    "thumb": {
+     "h": 150,
+     "resize": "crop",
+     "w": 150
+    }
+   },
+   "type": "video",
+   "url": "https://t.co/jEujeTYpiz",
+   "video_info": {
+    "aspect_ratio": [
+     40,
+     71
+    ],
+    "duration_millis": 8033,
+    "variants": [
+     {
+      "content_type": "application/x-mpegURL",
+      "url": "https://video.twimg.com/ext_tw_video/1623274794488659969/pu/pl/OvydA7vARioFDi8r.m3u8?tag=12&v=e33"
+     },
+     {
+      "bitrate": 632000,
+      "content_type": "video/mp4",
+      "url": "https://video.twimg.com/ext_tw_video/1623274794488659969/pu/vid/320x568/xnFsMVjPfGbNalLt.mp4?tag=12"
+     },
+     {
+      "bitrate": 950000,
+      "content_type": "video/mp4",
+      "url": "https://video.twimg.com/ext_tw_video/1623274794488659969/pu/vid/480x852/oO0yLSiXDsIZFwXL.mp4?tag=12"
+     },
+     {
+      "bitrate": 2176000,
+      "content_type": "video/mp4",
+      "url": "https://video.twimg.com/ext_tw_video/1623274794488659969/pu/vid/720x1278/fRurBYrK1nomZqPU.mp4?tag=12"
+     }
+    ]
+   }
+  },
+  {
+   "display_url": "pic.x.com/jEujeTYpiz",
+   "expanded_url": "https://x.com/Johnnybull3ts/status/1623274856664948736/video/1",
+   "ext_media_availability": {
+    "status": "Available"
+   },
+   "indices": [
+    65,
+    88
+   ],
+   "media_url_https": "https://pbs.twimg.com/media/FocH0zoWYAI6Xbo.jpg",
+   "original_info": {
+    "focus_rects": [
+     {
+      "h": 645,
+      "w": 1152,
+      "x": 0,
+      "y": 138
+     },
+     {
+      "h": 1152,
+      "w": 1152,
+      "x": 0,
+      "y": 0
+     },
+     {
+      "h": 1313,
+      "w": 1152,
+      "x": 0,
+      "y": 0
+     },
+     {
+      "h": 2048,
+      "w": 1024,
+      "x": 0,
+      "y": 0
+     },
+     {
+      "h": 2048,
+      "w": 1152,
+      "x": 0,
+      "y": 0
+     }
+    ],
+    "height": 2048,
+    "width": 1152
+   },
+   "sizes": {
+    "large": {
+     "h": 2048,
+     "resize": "fit",
+     "w": 1152
+    },
+    "medium": {
+     "h": 1200,
+     "resize": "fit",
+     "w": 675
+    },
+    "small": {
+     "h": 680,
+     "resize": "fit",
+     "w": 383
+    },
+    "thumb": {
+     "h": 150,
+     "resize": "crop",
+     "w": 150
+    }
+   },
+   "type": "photo",
+   "url": "https://t.co/jEujeTYpiz"
+  },
+  {
+   "display_url": "pic.x.com/jEujeTYpiz",
+   "expanded_url": "https://x.com/Johnnybull3ts/status/1623274856664948736/video/1",
+   "ext_media_availability": {
+    "status": "Available"
+   },
+   "indices": [
+    65,
+    88
+   ],
+   "media_url_https": "https://pbs.twimg.com/media/FocH0zoWcAIcrlX.jpg",
+   "original_info": {
+    "focus_rects": [
+     {
+      "h": 917,
+      "w": 1638,
+      "x": 0,
+      "y": 207
+     },
+     {
+      "h": 1638,
+      "w": 1638,
+      "x": 0,
+      "y": 0
+     },
+     {
+      "h": 1867,
+      "w": 1638,
+      "x": 0,
+      "y": 0
+     },
+     {
+      "h": 2048,
+      "w": 1024,
+      "x": 51,
+      "y": 0
+     },
+     {
+      "h": 2048,
+      "w": 1638,
+      "x": 0,
+      "y": 0
+     }
+    ],
+    "height": 2048,
+    "width": 1638
+   },
+   "sizes": {
+    "large": {
+     "h": 2048,
+     "resize": "fit",
+     "w": 1638
+    },
+    "medium": {
+     "h": 1200,
+     "resize": "fit",
+     "w": 960
+    },
+    "small": {
+     "h": 680,
+     "resize": "fit",
+     "w": 544
+    },
+    "thumb": {
+     "h": 150,
+     "resize": "crop",
+     "w": 150
+    }
+   },
+   "type": "photo",
+   "url": "https://t.co/jEujeTYpiz"
+  }
+ ],
+ "photos": [
+  {
+   "backgroundColor": {
+    "red": 204,
+    "green": 214,
+    "blue": 221
+   },
+   "cropCandidates": [
+    {
+     "h": 645,
+     "w": 1152,
+     "x": 0,
+     "y": 138
+    },
+    {
+     "h": 1152,
+     "w": 1152,
+     "x": 0,
+     "y": 0
+    },
+    {
+     "h": 1313,
+     "w": 1152,
+     "x": 0,
+     "y": 0
+    },
+    {
+     "h": 2048,
+     "w": 1024,
+     "x": 0,
+     "y": 0
+    },
+    {
+     "h": 2048,
+     "w": 1152,
+     "x": 0,
+     "y": 0
+    }
+   ],
+   "expandedUrl": "https://x.com/Johnnybull3ts/status/1623274856664948736/video/1",
+   "url": "https://pbs.twimg.com/media/FocH0zoWYAI6Xbo.jpg",
+   "width": 1152,
+   "height": 2048
+  },
+  {
+   "backgroundColor": {
+    "red": 204,
+    "green": 214,
+    "blue": 221
+   },
+   "cropCandidates": [
+    {
+     "h": 917,
+     "w": 1638,
+     "x": 0,
+     "y": 207
+    },
+    {
+     "h": 1638,
+     "w": 1638,
+     "x": 0,
+     "y": 0
+    },
+    {
+     "h": 1867,
+     "w": 1638,
+     "x": 0,
+     "y": 0
+    },
+    {
+     "h": 2048,
+     "w": 1024,
+     "x": 51,
+     "y": 0
+    },
+    {
+     "h": 2048,
+     "w": 1638,
+     "x": 0,
+     "y": 0
+    }
+   ],
+   "expandedUrl": "https://x.com/Johnnybull3ts/status/1623274856664948736/video/1",
+   "url": "https://pbs.twimg.com/media/FocH0zoWcAIcrlX.jpg",
+   "width": 1638,
+   "height": 2048
+  }
+ ],
+ "video": {
+  "aspectRatio": [
+   40,
+   71
+  ],
+  "contentType": "media_entity",
+  "durationMs": 8033,
+  "mediaAvailability": {
+   "status": "available"
+  },
+  "poster": "https://pbs.twimg.com/ext_tw_video_thumb/1623274794488659969/pu/img/2DFy7Je9xBJXIZW8.jpg",
+  "variants": [
+   {
+    "type": "application/x-mpegURL",
+    "src": "https://video.twimg.com/ext_tw_video/1623274794488659969/pu/pl/OvydA7vARioFDi8r.m3u8?tag=12&v=e33"
+   },
+   {
+    "type": "video/mp4",
+    "src": "https://video.twimg.com/ext_tw_video/1623274794488659969/pu/vid/320x568/xnFsMVjPfGbNalLt.mp4?tag=12"
+   },
+   {
+    "type": "video/mp4",
+    "src": "https://video.twimg.com/ext_tw_video/1623274794488659969/pu/vid/480x852/oO0yLSiXDsIZFwXL.mp4?tag=12"
+   },
+   {
+    "type": "video/mp4",
+    "src": "https://video.twimg.com/ext_tw_video/1623274794488659969/pu/vid/720x1278/fRurBYrK1nomZqPU.mp4?tag=12"
+   }
+  ],
+  "videoId": {
+   "type": "tweet",
+   "id": "1623274856664948736"
+  },
+  "viewCount": 0
+ },
+ "conversation_count": 174,
+ "news_action_type": "conversation",
+ "quoted_tweet": {
+  "favorite_count": 8460,
+  "lang": "en",
+  "reply_count": 6144,
+  "retweet_count": 431,
+  "created_at": "2023-02-03T00:43:58.000Z",
+  "display_text_range": [
+   0,
+   37
+  ],
+  "entities": {},
+  "id_str": "1621308476973801473",
+  "text": "Men should not wear women\u2019s clothing.",
+  "user": {
+   "id_str": "41160276",
+   "name": "PragerU",
+   "screen_name": "prageru",
+   "is_blue_verified": true,
+   "profile_image_shape": "Square",
+   "verified": false,
+   "verified_type": "Business",
+   "profile_image_url_https": "https://pbs.twimg.com/profile_images/1747296055883096064/I-KBU-Gf_normal.jpg"
+  },
+  "edit_control": {
+   "edit_tweet_ids": [
+    "1621308476973801473"
+   ],
+   "editable_until_msecs": "1675386838000",
+   "edits_remaining": "5",
+   "is_edit_eligible": false
+  },
+  "isEdited": false,
+  "isStaleEdit": false
+ },
+ "isEdited": false,
+ "isStaleEdit": false
+}
