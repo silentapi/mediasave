@@ -58,6 +58,15 @@ Running log of choices the spec left open ("decide") and results of the checks i
 - **Short links** (`vm.`/`vt.`/`tiktok.com/t/`) expand with a plain HEAD request (no impersonation needed); tracking params are dropped and the `@author` path is kept.
 - **Smoke (local datacenter IP, 2026-09-11):** video + photo-mode resolve; video `Range` → 206 with the cookie replayed; full 5 MB download OK; both photos download; zip validates. The same smoke must be re-run from the droplet at deploy (milestone 6) since TikTok's blocking is per-IP-range.
 
+## Milestone 5 — PWA shell
+
+- **"Lighthouse PWA pass" is no longer a thing.** Lighthouse removed the PWA category in v12 (2024); v13.4 here has only performance / accessibility / best-practices. Installability is verified instead with Chrome's own check over the DevTools protocol (`Page.getInstallabilityErrors` + `Page.getAppManifest`) in `scripts/e2e_share.py`: **no installability errors** on a non-incognito profile (Chrome refuses installs in incognito, which Playwright contexts are by default). Lighthouse on `/login`: performance 100, accessibility 100 (after fixing the accent button contrast and adding `<main>` landmarks), best practices 100; FCP 0.8 s, TBT 0 ms.
+- **Manifest** gained `id`, `scope`, `description` and `share_target.enctype = application/x-www-form-urlencoded` (Chrome logs a manifest warning without the explicit enctype even for GET).
+- **Desktop Chrome share simulation** = `scripts/e2e_share.py` (Playwright, real Chromium, mobile viewport). It proves: pre-login share → `/login?next=` → back to the exact share URL → downloads; gif tweet → `.gif` + `.mp4` downloads with the right suggested filenames and a real GIF payload; multi-item tweet → 3 staggered downloads + the "allow multiple downloads" hint; TikTok photo-mode via a `tiktok.com/t/` short link with share-sheet text → 2 `.jpeg`; error copy for unsupported / no-link / no-media / not-found with Retry visible; `zip_multi` setting → a single `.zip`; SW active with the shell cached and nothing under `/v1` or `/share`; icons served as PNG; the post-close "you can go back" hint.
+- **Playwright fires `download` for programmatic `<a download>` clicks**, so the stagger and filename logic is exercised for real, not mocked. What it cannot prove is Android Chrome's multi-download permission prompt and `window.close()` behaviour on a share-opened window — that is §8.3/8.4 and needs the deployed site + a phone (milestone 6).
+- **Service worker precaches `/`** (spec §4.3). Because `/` is auth-gated, the cached copy is whatever the user saw at install time; that is fine because the page's own fetches (`/v1/health`, resolve) are network-only, and `deploy.sh` bumps the cache version on every deploy so the shell never goes stale.
+- `playwright` is a dev-only dependency (`requirements-dev.txt`); the browser comes from the environment (`CHROME=/path` or Playwright's own download).
+
 ## §8 verifications (before provider code)
 
 ### 8.1 yt-dlp Twitter syndication token — VERIFIED 2026-09-10 (yt-dlp 2026.08.19)

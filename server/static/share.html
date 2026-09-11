@@ -19,12 +19,13 @@ ul#items{list-style:none;padding:0;margin:1rem 0;text-align:left}
 ul#items li{padding:.35rem .6rem;border-bottom:1px solid #222;font-size:.9rem;display:flex;justify-content:space-between;gap:.5rem}
 ul#items li span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ok{color:#3ddc84}.err{color:#ff6b6b}
-button{padding:.7rem 1.4rem;border-radius:8px;border:0;background:#4f9cff;color:#fff;font-size:1rem;margin:.5rem .25rem}
-button.secondary{background:#333}
+button{padding:.7rem 1.4rem;border-radius:8px;border:0;background:#4f9cff;color:#0b1220;font-weight:600;font-size:1rem;margin:.5rem .25rem}
+button.secondary{background:#333;color:#eee}
 .hidden{display:none}
 </style>
 </head>
 <body>
+<main>
 <div id="status"><span class="spin"></span>Saving…</div>
 <div id="detail"></div>
 <ul id="items"></ul>
@@ -33,6 +34,7 @@ button.secondary{background:#333}
   <a href="/"><button class="secondary" type="button">Open app</button></a>
 </div>
 <p id="hint"></p>
+</main>
 <script src="/static/share.js"></script>
 </body>
 </html>

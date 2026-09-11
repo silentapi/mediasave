@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="/static/app.css">
 </head>
 <body>
+<main>
 <h1>Media Saver</h1>
 
 <div class="card">
@@ -45,6 +46,7 @@
   <p class="muted small">Runs the exact share flow in this tab.</p>
   <p class="small"><a href="/share-debug">Share-target debug page</a> · <a href="/logout" onclick="fetch('/logout',{method:'POST'}).then(function(){location='/login'});return false">Log out</a></p>
 </div>
+</main>
 <script src="/static/app.js"></script>
 </body>
 </html>

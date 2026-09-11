@@ -12,7 +12,7 @@ Spec: [`media-saver-SPEC-pwa.md`](media-saver-SPEC-pwa.md) (source of truth). De
 | 2 | Twitter provider | ✅ |
 | 3 | Gif pipeline | ✅ |
 | 4 | TikTok provider | ✅ (re-check from the droplet at deploy) |
-| 5 | PWA shell (installable, end-to-end share) | ⏳ (shell files exist; verified after 2) |
+| 5 | PWA shell (installable, end-to-end share) | ✅ desktop Chrome (Android part with milestone 6) |
 | 6 | Deploy | ⏳ |
 | 7 | Polish | ⏳ |
 
@@ -61,6 +61,15 @@ curl -s -X POST http://127.0.0.1:8000/v1/resolve -H "X-Api-Key: $ACCESS_KEY" \
 ```bash
 BASE=http://127.0.0.1:8000 ACCESS_KEY=… \
 TW_PHOTO=https://x.com/… TW_MULTI=… TW_VIDEO=… TW_GIF=… TT_VIDEO=… TT_PHOTO=… scripts/smoke.sh
+```
+
+## Browser end-to-end test
+
+`scripts/e2e_share.py` drives a real Chromium (Playwright) through the whole share flow against a running instance: login redirect, downloads with filenames, error copy, zip setting, service worker cache scope, manifest, and Chrome's installability check.
+
+```bash
+pip install playwright && playwright install chromium     # or CHROME=/path/to/chrome
+BASE=http://127.0.0.1:8000 ACCESS_KEY=… scripts/e2e_share.py
 ```
 
 ## Deploy (Digital Ocean droplet)

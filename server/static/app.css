@@ -8,8 +8,8 @@ a{color:var(--accent)}
 .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1rem;margin:.75rem 0}
 label{display:block;margin:.5rem 0}
 input[type=text],input[type=password],input[type=url]{width:100%;padding:.7rem .8rem;border-radius:8px;border:1px solid var(--line);background:#0d0d0d;color:var(--fg);font-size:1rem}
-button,.btn{display:inline-block;padding:.65rem 1rem;border-radius:8px;border:0;background:var(--accent);color:#fff;font-size:1rem;cursor:pointer;text-decoration:none}
-button.secondary{background:#333}
+button,.btn{display:inline-block;padding:.65rem 1rem;border-radius:8px;border:0;background:var(--accent);color:#0b1220;font-weight:600;font-size:1rem;cursor:pointer;text-decoration:none}
+button.secondary{background:#333;color:#eee}
 button:disabled{opacity:.5}
 .row{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
 .muted{color:var(--muted)}
