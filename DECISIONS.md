@@ -24,6 +24,19 @@ Running log of choices the spec left open ("decide") and results of the checks i
 - **Compose.** App port 8000 is published on `127.0.0.1` only (for smoke tests and local use); Caddy is the public face. `SITE_ADDRESS` env selects the Caddy site; `localhost` gives a self-signed local cert.
 - **Local verification environment.** The build sandbox has no Docker daemon and no ffmpeg; milestone 1 was verified with uvicorn + curl + pytest (63 tests). `docker compose up` itself must be run on a machine with Docker.
 
+## Milestone 2 — Twitter provider
+
+- **Endpoint + UA.** `GET https://cdn.syndication.twimg.com/tweet-result?id=&token=` with `User-Agent: Googlebot` first (what yt-dlp uses and what worked live), browser UA as a second attempt on transport/HTTP errors. 15 s timeout → `timeout`.
+- **Token.** Imported from `yt_dlp.jsinterp.js_number_to_string`, with a verbatim port kept in `providers/twitter.py` as a fallback; a unit test asserts both agree on real IDs and match values observed live.
+- **Author comes from the tweet, not the URL.** Twitter ignores the username segment (`x.com/anyone/status/<id>` works), so filenames use `user.screen_name` from the response. Example: the yt-dlp test URL `liberdalau/status/1623739803874349067` is actually by `@Johnnybull3ts`.
+- **Filenames.** `twitter_<screen_name>_<tweet id>_<n>.<ext>` where `n` is the 1-based position in `mediaDetails` (post order). Gif and its source mp4 share the base name. Photo ext comes from `media_url_https` (jpg/png/webp); full-size via `?format=<ext>&name=orig`.
+- **Video.** Highest-`bitrate` `video/mp4` variant; HLS ignored. `bytes` is `null` in the resolve response (syndication doesn't give sizes); the dl proxy passes upstream `Content-Length` through, so Chrome still shows progress.
+- **animated_gif.** Its single mp4 variant is converted during resolve (§3.7); multiple gifs in one tweet convert concurrently. Gif item first, then the mp4 item when `gif_keep_mp4` (default from `GIF_KEEP_MP4_DEFAULT`). Conversion result: live sample 540×540 mp4 → 480×480, 15 fps, 44 frames, 4.5 MB gif in ~5 s (first resolve), cache hit thereafter (< 1 s).
+- **Tombstones.** `__typename == "TweetTombstone"` → `not_found`, unless the tombstone text mentions protected/private (→ `private`) or age/sensitive (→ `private` with a login hint). Empty body (unknown ID) → `not_found`. With `COOKIES_PATH` set, `private`/`not_found` first try yt-dlp before failing.
+- **yt-dlp fallback shape.** Playlist → one entry per media; entry with mp4 formats → video, or gif when all formats are silent (`acodec == none`) and `duration ≤ 30 s` (spec heuristic; yt-dlp doesn't tag gifs). Image entries are used when yt-dlp returns them.
+- **Quote tweets.** Only `mediaDetails` of the shared tweet; `quoted_tweet` ignored (a commented `include_quoted` hook is left in the provider). No media → `no_media`.
+- **Smoke (local, 2026-09-11):** photo+video, video+2 photos, video, gif tweets all resolve; `Content-Disposition` correct; `Range: bytes=0-99` → 206 with `Content-Range` passed through from `video.twimg.com`; gif magic bytes verified.
+
 ## §8 verifications (before provider code)
 
 ### 8.1 yt-dlp Twitter syndication token — VERIFIED 2026-09-10 (yt-dlp 2026.08.19)

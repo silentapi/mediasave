@@ -35,25 +35,34 @@ resolve() {
   n="$(echo "$out" | jq '.items|length')"; kinds="$(echo "$out" | jq -r '[.items[].kind]|join(",")')"
   if [ -n "$want_n" ] && [ "$n" != "$want_n" ]; then bad "$label: $n items (want $want_n) kinds=$kinds"; return; fi
   if [ -n "$want_kinds" ] && [ "$kinds" != "$want_kinds" ]; then bad "$label: kinds=$kinds (want $want_kinds)"; return; fi
-  pass "$label: $(echo "$out" | jq -r '.summary') by @$(echo "$out" | jq -r .author)"
+  pass "$label: $(echo "$out" | jq -r '.summary') by @$(echo "$out" | jq -r .author) ($(echo "$out" | jq -r '[.items[].filename]|join(", ")'))"
   FIRST_DL="${FIRST_DL:-$(echo "$out" | jq -r '.items[0].dl')}"
   FIRST_NAME="${FIRST_NAME:-$(echo "$out" | jq -r '.items[0].filename')}"
+  # remember one gif and one remote item so the header check covers both serving paths
+  local g; g="$(echo "$out" | jq -r '[.items[]|select(.kind=="gif")][0].dl // empty')"; [ -n "$g" ] && GIF_DL="${GIF_DL:-$g}"
 }
 
+# Expected kinds can be overridden per case with <VAR>_KINDS (comma-separated), e.g. TW_PHOTO_KINDS=photo,video
 echo "twitter:"
-resolve "photo"       "${TW_PHOTO:-}" 1 "photo"
-resolve "multi-photo" "${TW_MULTI:-}" "" ""
-resolve "video"       "${TW_VIDEO:-}" 1 "video"
-resolve "gif"         "${TW_GIF:-}"   2 "gif,video"
+resolve "photo"       "${TW_PHOTO:-}" "" "${TW_PHOTO_KINDS:-photo}"
+resolve "multi-photo" "${TW_MULTI:-}" "" "${TW_MULTI_KINDS:-}"
+resolve "video"       "${TW_VIDEO:-}" "" "${TW_VIDEO_KINDS:-video}"
+resolve "gif"         "${TW_GIF:-}"   "" "${TW_GIF_KINDS:-gif,video}"
 echo "tiktok:"
-resolve "video"       "${TT_VIDEO:-}" 1 "video"
-resolve "photo-mode"  "${TT_PHOTO:-}" "" ""
+resolve "video"       "${TT_VIDEO:-}" "" "${TT_VIDEO_KINDS:-video}"
+resolve "photo-mode"  "${TT_PHOTO:-}" "" "${TT_PHOTO_KINDS:-}"
 
 if [ -n "${FIRST_DL:-}" ]; then
   echo "download headers:"
   hdr="$(curl -sS -D - -o /dev/null -r 0-1023 "$BASE$FIRST_DL" 2>&1)"
   echo "$hdr" | grep -qi "content-disposition: attachment; filename=\"$FIRST_NAME\"" && pass "Content-Disposition attachment; filename=\"$FIRST_NAME\"" || bad "bad Content-Disposition: $(echo "$hdr" | grep -i content-disposition)"
   echo "$hdr" | grep -qiE '^HTTP/[0-9.]+ (200|206)' && pass "status $(echo "$hdr" | head -1 | tr -d '\r')" || bad "status: $(echo "$hdr" | head -1)"
+fi
+if [ -n "${GIF_DL:-}" ]; then
+  echo "gif download:"
+  tmp="$(mktemp)"; curl -sS -o "$tmp" "$BASE$GIF_DL"
+  head -c 6 "$tmp" | grep -q 'GIF8' && pass "gif magic OK ($(wc -c < "$tmp") bytes)" || bad "not a gif"
+  rm -f "$tmp"
 fi
 
 [ $fail -eq 0 ] && echo "SMOKE OK" || { echo "SMOKE FAILED"; exit 1; }

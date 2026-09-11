@@ -1,0 +1,155 @@
+{
+ "__typename": "Tweet",
+ "favorite_count": 3279,
+ "lang": "en",
+ "possibly_sensitive": false,
+ "created_at": "2026-09-10T16:18:46.000Z",
+ "display_text_range": [
+  0,
+  172
+ ],
+ "entities": {
+  "media": [
+   {
+    "display_url": "pic.x.com/gezX9dORlx",
+    "expanded_url": "https://x.com/mrpxssy/status/2098083773837431020/video/1",
+    "indices": [
+     173,
+     196
+    ],
+    "url": "https://t.co/gezX9dORlx"
+   }
+  ]
+ },
+ "id_str": "2098083773837431020",
+ "text": "I was told I had the only full version of this edit that anyone can find anymore so I'm uploading it today for no particular reason\n\nWe Are Charlie Kirk (Jeffrey's Version) https://t.co/gezX9dORlx",
+ "user": {
+  "id_str": "879104601462644738",
+  "name": "mr pussy",
+  "screen_name": "mrpxssy",
+  "is_blue_verified": false,
+  "profile_image_shape": "Circle",
+  "verified": false,
+  "profile_image_url_https": "https://pbs.twimg.com/profile_images/1999914640545914880/SMhRb7iV_normal.jpg"
+ },
+ "edit_control": {
+  "edit_tweet_ids": [
+   "2098083773837431020"
+  ],
+  "editable_until_msecs": "1789060726000",
+  "edits_remaining": "5",
+  "is_edit_eligible": false
+ },
+ "mediaDetails": [
+  {
+   "additional_media_info": {},
+   "display_url": "pic.x.com/gezX9dORlx",
+   "expanded_url": "https://x.com/mrpxssy/status/2098083773837431020/video/1",
+   "ext_media_availability": {
+    "status": "Available"
+   },
+   "indices": [
+    173,
+    196
+   ],
+   "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2098083575849521156/img/Kf3qCa6ACnNVvCP3.jpg",
+   "original_info": {
+    "focus_rects": [],
+    "height": 546,
+    "width": 1080
+   },
+   "sizes": {
+    "large": {
+     "h": 546,
+     "resize": "fit",
+     "w": 1080
+    },
+    "medium": {
+     "h": 546,
+     "resize": "fit",
+     "w": 1080
+    },
+    "small": {
+     "h": 344,
+     "resize": "fit",
+     "w": 680
+    },
+    "thumb": {
+     "h": 150,
+     "resize": "crop",
+     "w": 150
+    }
+   },
+   "type": "video",
+   "url": "https://t.co/gezX9dORlx",
+   "video_info": {
+    "aspect_ratio": [
+     180,
+     91
+    ],
+    "duration_millis": 25254,
+    "variants": [
+     {
+      "content_type": "application/x-mpegURL",
+      "url": "https://video.twimg.com/amplify_video/2098083575849521156/pl/NlXN4fNGWLLpofwp.m3u8?v=cfc"
+     },
+     {
+      "bitrate": 256000,
+      "content_type": "video/mp4",
+      "url": "https://video.twimg.com/amplify_video/2098083575849521156/vid/avc1/534x270/UVwo9wFHLwQ23XGP.mp4"
+     },
+     {
+      "bitrate": 832000,
+      "content_type": "video/mp4",
+      "url": "https://video.twimg.com/amplify_video/2098083575849521156/vid/avc1/712x360/BH366miUpe8XVpib.mp4"
+     },
+     {
+      "bitrate": 2176000,
+      "content_type": "video/mp4",
+      "url": "https://video.twimg.com/amplify_video/2098083575849521156/vid/avc1/1080x546/2JfHLJE4fkur6yxA.mp4"
+     }
+    ]
+   }
+  }
+ ],
+ "photos": [],
+ "video": {
+  "aspectRatio": [
+   180,
+   91
+  ],
+  "contentType": "media_entity",
+  "durationMs": 25254,
+  "mediaAvailability": {
+   "status": "available"
+  },
+  "poster": "https://pbs.twimg.com/amplify_video_thumb/2098083575849521156/img/Kf3qCa6ACnNVvCP3.jpg",
+  "variants": [
+   {
+    "type": "application/x-mpegURL",
+    "src": "https://video.twimg.com/amplify_video/2098083575849521156/pl/NlXN4fNGWLLpofwp.m3u8?v=cfc"
+   },
+   {
+    "type": "video/mp4",
+    "src": "https://video.twimg.com/amplify_video/2098083575849521156/vid/avc1/534x270/UVwo9wFHLwQ23XGP.mp4"
+   },
+   {
+    "type": "video/mp4",
+    "src": "https://video.twimg.com/amplify_video/2098083575849521156/vid/avc1/712x360/BH366miUpe8XVpib.mp4"
+   },
+   {
+    "type": "video/mp4",
+    "src": "https://video.twimg.com/amplify_video/2098083575849521156/vid/avc1/1080x546/2JfHLJE4fkur6yxA.mp4"
+   }
+  ],
+  "videoId": {
+   "type": "tweet",
+   "id": "2098083773837431020"
+  },
+  "viewCount": 0
+ },
+ "conversation_count": 13,
+ "news_action_type": "conversation",
+ "isEdited": false,
+ "isStaleEdit": false
+}

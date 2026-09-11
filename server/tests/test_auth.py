@@ -1,5 +1,7 @@
 from urllib.parse import quote
 
+import pytest
+
 from app.auth import COOKIE_NAME
 
 
@@ -98,12 +100,28 @@ def test_resolve_garbage_400(auth_client):
     assert r.status_code == 400
 
 
-def test_resolve_provider_stub_502(auth_client):
+class _FailingProvider:
+    name = "twitter"
+
+    async def resolve(self, target, *, gif_keep_mp4):
+        from app.errors import ExtractFailed
+
+        raise ExtractFailed("boom")
+
+
+@pytest.fixture()
+def failing_twitter(monkeypatch):
+    from app import providers
+
+    monkeypatch.setitem(providers.PROVIDERS, "twitter", _FailingProvider())
+
+
+def test_resolve_provider_error_maps_to_502(auth_client, failing_twitter):
     r = auth_client.post("/v1/resolve", json={"url": "https://x.com/jack/status/20"})
-    assert r.status_code == 502 and r.json()["error"] == "extract_failed"
+    assert r.status_code == 502 and r.json() == {"error": "extract_failed", "message": "boom"}
 
 
-def test_rate_limit(auth_client):
+def test_rate_limit(auth_client, failing_twitter):
     codes = [auth_client.post("/v1/resolve", json={"url": "https://x.com/jack/status/20"}).status_code for _ in range(6)]
     assert codes[:5] == [502] * 5
     assert codes[5] == 429

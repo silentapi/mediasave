@@ -9,7 +9,7 @@ Spec: [`media-saver-SPEC-pwa.md`](media-saver-SPEC-pwa.md) (source of truth). De
 | # | Milestone | State |
 |---|---|---|
 | 1 | Server skeleton + auth + `/share-debug` | ✅ |
-| 2 | Twitter provider | ⏳ |
+| 2 | Twitter provider | ✅ |
 | 3 | Gif pipeline | ⏳ |
 | 4 | TikTok provider | ⏳ |
 | 5 | PWA shell (installable, end-to-end share) | ⏳ (shell files exist; verified after 2) |
