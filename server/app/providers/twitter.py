@@ -9,7 +9,7 @@ import asyncio
 import logging
 import math
 import re
-from typing import Any, Awaitable, Callable, Optional
+from typing import Any, Awaitable, Callable
 from urllib.parse import urlsplit
 
 import httpx
@@ -82,10 +82,10 @@ def syndication_token(twid: str) -> str:
 
 # --- fetching -------------------------------------------------------------------
 
-Fetcher = Callable[[str], Awaitable[Optional[dict[str, Any]]]]
+Fetcher = Callable[[str], Awaitable[dict[str, Any] | None]]
 
 
-async def fetch_syndication(twid: str, client: httpx.AsyncClient | None = None) -> Optional[dict[str, Any]]:
+async def fetch_syndication(twid: str, client: httpx.AsyncClient | None = None) -> dict[str, Any] | None:
     """Return the tweet JSON, `None` for an empty body. Raises Timeout/ExtractFailed."""
     params = {"id": twid, "token": syndication_token(twid)}
     own = client is None
@@ -130,14 +130,14 @@ def _ext_from_url(url: str, default: str = "jpg") -> str:
     return default
 
 
-def _best_mp4(video_info: dict[str, Any]) -> Optional[dict[str, Any]]:
+def _best_mp4(video_info: dict[str, Any]) -> dict[str, Any] | None:
     variants = [v for v in (video_info or {}).get("variants") or [] if v.get("content_type") == "video/mp4" and v.get("url")]
     if not variants:
         return None
     return max(variants, key=lambda v: v.get("bitrate") or 0)
 
 
-def _dims(m: dict[str, Any]) -> tuple[Optional[int], Optional[int]]:
+def _dims(m: dict[str, Any]) -> tuple[int | None, int | None]:
     oi = m.get("original_info") or {}
     w, h = oi.get("width"), oi.get("height")
     if not (w and h):
@@ -222,7 +222,7 @@ class TwitterProvider:
             return sources
         paths = await asyncio.gather(*(self._convert(sources[i].upstream_url, sources[i].headers) for i in idx))
         out = list(sources)
-        for i, path in zip(idx, paths):
+        for i, path in zip(idx, paths, strict=True):
             p = str(path)
             out[i] = sources[i].model_copy(update={"local_path": p, "upstream_url": None, "headers": {}, "bytes": _size(p)})
         return out
@@ -275,7 +275,7 @@ class TwitterProvider:
         return ResolvedPost(provider="twitter", post_id=twid, author=author, text=text, sources=sources)
 
 
-def _size(path: str) -> Optional[int]:
+def _size(path: str) -> int | None:
     try:
         import os
 

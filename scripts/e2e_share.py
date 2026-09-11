@@ -7,7 +7,6 @@ Usage: BASE=http://127.0.0.1:8000 ACCESS_KEY=... [CHROME=/path/to/chrome] script
 """
 from __future__ import annotations
 
-import json
 import os
 import sys
 import time

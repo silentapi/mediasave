@@ -55,7 +55,6 @@ async def test_real_conversion_and_cache(monkeypatch):
     url = "https://video.twimg.com/tweet_video/test-sample.mp4"
     out = convert.gif_path_for(url)
     out.unlink(missing_ok=True)
-    t0 = time.monotonic()
     p = await convert.convert_mp4_to_gif(url, headers={"Referer": "https://x.com/"})
     assert p == out and p.exists() and p.read_bytes()[:6] in (b"GIF89a", b"GIF87a")
     assert seen.get("referer") == "https://x.com/"

@@ -73,7 +73,7 @@ async def extract_info(url: str, extra_opts: dict[str, Any] | None = None, cfg: 
     try:
         return await asyncio.wait_for(loop.run_in_executor(_pool, _extract_sync, url, opts, cookie_domain), timeout=cfg.ytdlp_timeout)
     except asyncio.TimeoutError:
-        raise Timeout()
+        raise Timeout() from None
     except Exception as e:  # yt_dlp.utils.DownloadError and friends
         log.info("yt-dlp failed for %s: %s", url, type(e).__name__)
         raise map_error(e) from e

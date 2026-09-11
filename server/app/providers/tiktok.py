@@ -13,7 +13,7 @@ import json
 import logging
 import re
 from dataclasses import dataclass, field
-from typing import Any, Awaitable, Callable, Optional
+from typing import Any, Awaitable, Callable
 from urllib.parse import urlsplit
 
 import httpx
@@ -101,14 +101,14 @@ def _mime(ext: str) -> str:
     return {"jpg": "image/jpeg", "jpeg": "image/jpeg", "png": "image/png", "webp": "image/webp", "heic": "image/heic"}.get(ext, "application/octet-stream")
 
 
-def _int(v: Any) -> Optional[int]:
+def _int(v: Any) -> int | None:
     try:
         return int(v) if v not in (None, "") else None
     except (TypeError, ValueError):
         return None
 
 
-def choose_video(video: dict[str, Any]) -> Optional[dict[str, Any]]:
+def choose_video(video: dict[str, Any]) -> dict[str, Any] | None:
     """Best watermark-free mp4: h264 with the highest bitrate, then other playable codecs, then playAddr."""
     cands = []
     for b in video.get("bitrateInfo") or []:

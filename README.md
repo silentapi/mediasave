@@ -13,8 +13,8 @@ Spec: [`media-saver-SPEC-pwa.md`](media-saver-SPEC-pwa.md) (source of truth). De
 | 3 | Gif pipeline | ✅ |
 | 4 | TikTok provider | ✅ (re-check from the droplet at deploy) |
 | 5 | PWA shell (installable, end-to-end share) | ✅ desktop Chrome (Android part with milestone 6) |
-| 6 | Deploy | ⏳ |
-| 7 | Polish | ⏳ |
+| 6 | Deploy | ⏳ needs droplet + domain (`scripts/deploy.sh`), then phone checks via `/share-debug` |
+| 7 | Polish | ◐ zip option, settings, login-redirect path, cron docs done; §8.3/8.4 phone findings pending |
 
 ## Run locally
 

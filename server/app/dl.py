@@ -10,7 +10,7 @@ import re
 import struct
 import time
 import zlib
-from typing import AsyncIterator, Optional
+from typing import AsyncIterator
 
 import httpx
 from fastapi import APIRouter, Request
@@ -122,7 +122,7 @@ def _upstream_client() -> httpx.AsyncClient:
     return httpx.AsyncClient(follow_redirects=True, timeout=httpx.Timeout(30.0, read=120.0))
 
 
-async def _stream_upstream(src: MediaSource, range_header: Optional[str]) -> Response:
+async def _stream_upstream(src: MediaSource, range_header: str | None) -> Response:
     headers = dict(src.headers)
     if range_header:
         headers["Range"] = range_header

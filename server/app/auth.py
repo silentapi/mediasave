@@ -6,7 +6,6 @@ The key is never logged.
 from __future__ import annotations
 
 import secrets
-from typing import Optional
 from urllib.parse import parse_qs, quote
 
 from fastapi import APIRouter, Depends, Request
@@ -28,7 +27,7 @@ def make_session_cookie(cfg: Settings) -> str:
     return _signer(cfg).sign(b"ok").decode("ascii")
 
 
-def session_cookie_valid(cfg: Settings, value: Optional[str]) -> bool:
+def session_cookie_valid(cfg: Settings, value: str | None) -> bool:
     if not value:
         return False
     try:
@@ -38,7 +37,7 @@ def session_cookie_valid(cfg: Settings, value: Optional[str]) -> bool:
         return False
 
 
-def api_key_valid(cfg: Settings, value: Optional[str]) -> bool:
+def api_key_valid(cfg: Settings, value: str | None) -> bool:
     if not value:
         return False
     return secrets.compare_digest(value.encode("utf-8"), cfg.access_key.encode("utf-8"))
@@ -61,7 +60,7 @@ def require_auth(request: Request) -> None:
         raise Unauthorized()
 
 
-def safe_next(value: Optional[str]) -> str:
+def safe_next(value: str | None) -> str:
     """Only allow same-site relative paths for the post-login redirect (no open redirect)."""
     if not value or not value.startswith("/") or value.startswith("//") or "\\" in value:
         return "/"

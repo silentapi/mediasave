@@ -56,7 +56,7 @@ async def _run(cmd: list[str], timeout: float) -> None:
         _, err = await asyncio.wait_for(proc.communicate(), timeout=timeout)
     except asyncio.TimeoutError:
         proc.kill()
-        raise Timeout("Gif conversion timed out.")
+        raise Timeout("Gif conversion timed out.") from None
     if proc.returncode != 0:
         raise ExtractFailed(f"ffmpeg failed: {err.decode(errors='replace')[-300:]}")
 

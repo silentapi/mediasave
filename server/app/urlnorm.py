@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
-from typing import Optional
 from urllib.parse import urlsplit, urlunsplit
 
 import httpx
@@ -37,7 +36,7 @@ class NormalizedUrl:
     canonical_url: str
 
 
-def extract_first_url(text: str) -> Optional[str]:
+def extract_first_url(text: str) -> str | None:
     """First http(s) URL in free text (share sheets prepend post text)."""
     if not text:
         return None
