@@ -25,7 +25,7 @@ docker compose up --build
 ```
 
 - App directly: http://127.0.0.1:8000 → `/login`, `/v1/health`, `/share-debug`
-- Through Caddy: https://localhost (self-signed; `SITE_ADDRESS=localhost` in `.env`). Trust the local cert or use the direct port for testing.
+- Through Caddy: https://localhost (self-signed; `SITE_HOST=localhost` in `.env`). Trust the local cert or use the direct port for testing.
 
 Without Docker:
 
@@ -75,7 +75,7 @@ BASE=http://127.0.0.1:8000 ACCESS_KEY=… scripts/e2e_share.py
 ## Deploy (Digital Ocean droplet)
 
 1. Point `media.<domain>` at the droplet (A/AAAA). Ports 80/443 open.
-2. On the droplet: install Docker + compose plugin, `mkdir -p /opt/media-saver/server`, copy `server/.env.example` → `/opt/media-saver/server/.env` and fill in `ACCESS_KEY`, `SECRET`, `PUBLIC_BASE_URL=https://media.<domain>`, `SITE_ADDRESS=media.<domain>`.
+2. On the droplet: install Docker + compose plugin, `mkdir -p /opt/media-saver/server`, copy `server/.env.example` → `/opt/media-saver/server/.env` and fill in `ACCESS_KEY`, `SECRET`, `PUBLIC_BASE_URL=https://media.<domain>[:port]`, `SITE_HOST=media.<domain>`, `SITE_PORT` (443 or a custom port such as 6666; ports 80 and 443 must stay reachable for the certificate challenges either way).
 3. From your machine: `scripts/deploy.sh root@droplet` — rsyncs the repo, stamps a fresh service-worker cache version, runs `docker compose up -d --build`.
 4. `BASE=https://media.<domain> ACCESS_KEY=… scripts/smoke.sh`.
 

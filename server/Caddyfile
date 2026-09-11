@@ -1,5 +1,9 @@
-# SITE_ADDRESS comes from .env (e.g. media.example.com). Use "localhost" for a local self-signed setup.
-{$SITE_ADDRESS:localhost} {
+# SITE_HOST / SITE_PORT come from .env (e.g. media.example.com / 443).
+# Automatic HTTPS still works on a non-443 port: Caddy answers the ACME challenges on
+# ports 80 and 443, so both must stay reachable on the host even when SITE_PORT is e.g. 6666.
+# Use SITE_HOST=localhost for a local self-signed setup.
+
+{$SITE_HOST:localhost}:{$SITE_PORT:443} {
 	encode gzip
 
 	# Static shell straight from disk; everything else to the app.
@@ -25,4 +29,9 @@
 		Referrer-Policy no-referrer
 		-Server
 	}
+}
+
+# Plain-HTTP visitors get sent to the real (possibly non-443) HTTPS port.
+http://{$SITE_HOST:localhost}:80 {
+	redir https://{$SITE_HOST:localhost}:{$SITE_PORT:443}{uri} permanent
 }

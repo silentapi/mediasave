@@ -22,9 +22,10 @@ services:
     restart: unless-stopped
     env_file: .env
     ports:
-      - "80:80"
-      - "443:443"
-      - "443:443/udp"
+      - "80:80"                                   # ACME HTTP-01 challenge + redirect to HTTPS
+      - "443:443"                                 # ACME TLS-ALPN challenge (and the site when SITE_PORT=443)
+      - "${SITE_PORT:-443}:${SITE_PORT:-443}"     # the site itself (e.g. 6666)
+      - "${SITE_PORT:-443}:${SITE_PORT:-443}/udp" # HTTP/3
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - ./static:/srv/static:ro

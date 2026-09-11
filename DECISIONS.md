@@ -121,6 +121,10 @@ Questions to answer with `/share-debug` on a phone:
 - How many of 3 land with 0 ms / 400 ms / 1000 ms stagger?
 - When does the "download multiple files" prompt appear and is it remembered?
 
+## Deployment notes
+
+- **Custom HTTPS port (site is `media.basedboats.com:6666`).** Caddy's site address is `{$SITE_HOST}:{$SITE_PORT}`; automatic HTTPS still applies to a domain on a non-443 port, but Caddy solves the Let's Encrypt HTTP-01 / TLS-ALPN-01 challenges on ports 80 and 443, so compose publishes 80, 443 and `SITE_PORT`. A plain-HTTP block on port 80 redirects to the custom port (Caddy's built-in redirect would point at 443). If 80/443 cannot be exposed on that host, the alternative is a DNS-01 challenge (needs a Caddy build with the DNS provider plugin) — not done unless needed. The PWA is unaffected by the port: the origin includes it, cookies are not port-scoped, and `PUBLIC_BASE_URL` carries it.
+
 ## Open items / deviations
 
 - None yet.
