@@ -43,12 +43,16 @@ def base_opts(cfg: Settings | None = None) -> dict[str, Any]:
     return opts
 
 
-def _extract_sync(url: str, opts: dict[str, Any]) -> dict[str, Any]:
+def _extract_sync(url: str, opts: dict[str, Any], cookie_domain: str | None = None) -> dict[str, Any]:
     import yt_dlp
 
     with yt_dlp.YoutubeDL(opts) as ydl:
         info = ydl.extract_info(url, download=False)
-    return ydl.sanitize_info(info) if info is not None else {}
+        out = ydl.sanitize_info(info) if info is not None else {}
+        if cookie_domain and out is not None:
+            # Cookies the extractor picked up (e.g. TikTok's tt_chain_token) so the dl proxy can replay them.
+            out["__cookies"] = {c.name: c.value for c in ydl.cookiejar if c.domain.lstrip(".").endswith(cookie_domain)}
+    return out
 
 
 def map_error(exc: Exception) -> Exception:
@@ -60,14 +64,14 @@ def map_error(exc: Exception) -> Exception:
     return ExtractFailed()
 
 
-async def extract_info(url: str, extra_opts: dict[str, Any] | None = None, cfg: Settings | None = None) -> dict[str, Any]:
+async def extract_info(url: str, extra_opts: dict[str, Any] | None = None, cfg: Settings | None = None, cookie_domain: str | None = None) -> dict[str, Any]:
     cfg = cfg or settings()
     opts = base_opts(cfg)
     if extra_opts:
         opts.update(extra_opts)
     loop = asyncio.get_running_loop()
     try:
-        return await asyncio.wait_for(loop.run_in_executor(_pool, _extract_sync, url, opts), timeout=cfg.ytdlp_timeout)
+        return await asyncio.wait_for(loop.run_in_executor(_pool, _extract_sync, url, opts, cookie_domain), timeout=cfg.ytdlp_timeout)
     except asyncio.TimeoutError:
         raise Timeout()
     except Exception as e:  # yt_dlp.utils.DownloadError and friends

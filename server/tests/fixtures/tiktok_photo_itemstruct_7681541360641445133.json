@@ -1,0 +1,58 @@
+{
+ "id": "7681541360641445133",
+ "desc": "",
+ "createTime": "1788498261",
+ "author": {
+  "id": "7428338124355273774",
+  "uniqueId": "bbscollection3.0",
+  "nickname": "bbscollection3.0"
+ },
+ "video": {
+  "id": "7681541360641445133",
+  "height": 0,
+  "width": 0,
+  "duration": 0
+ },
+ "imagePost": {
+  "images": [
+   {
+    "imageURL": {
+     "urlList": [
+      "https://p16-common-sign.tiktokcdn-us.com/tos-useast5-i-photomode-tx/69bab576407e4775aea7a25f66faa93a~tplv-photomode-image.jpeg?dr=9616&x-expires=1789264800&x-signature=GU%2BqBBacnB%2BBPTKgd5MOdtsU0zc%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=9b759fb9&idc=useast5&ftpl=1",
+      "https://p19-common-sign.tiktokcdn-us.com/tos-useast5-i-photomode-tx/69bab576407e4775aea7a25f66faa93a~tplv-photomode-image.jpeg?dr=9616&x-expires=1789264800&x-signature=rol5CvWm61XIZtup%2BWXN2sDq5QM%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=9b759fb9&idc=useast5&ftpl=1"
+     ]
+    },
+    "imageWidth": 1170,
+    "imageHeight": 1170
+   },
+   {
+    "imageURL": {
+     "urlList": [
+      "https://p19-common-sign.tiktokcdn-us.com/tos-useast5-i-photomode-tx/58b6a9a4fde74fa9ad467d0de94483a7~tplv-photomode-image.jpeg?dr=9616&x-expires=1789264800&x-signature=XdKGXK%2Fo%2FPbZqKD0Gu9%2F%2BIJGR9U%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=9b759fb9&idc=useast5&ftpl=1",
+      "https://p16-common-sign.tiktokcdn-us.com/tos-useast5-i-photomode-tx/58b6a9a4fde74fa9ad467d0de94483a7~tplv-photomode-image.jpeg?dr=9616&x-expires=1789264800&x-signature=Mq3O1H%2BdtRwdCl29%2FPJyn2NR920%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=9b759fb9&idc=useast5&ftpl=1"
+     ]
+    },
+    "imageWidth": 1170,
+    "imageHeight": 1560
+   }
+  ],
+  "cover": {
+   "imageURL": {
+    "urlList": [
+     "https://p16-common-sign.tiktokcdn-us.com/tos-useast5-i-photomode-tx/69bab576407e4775aea7a25f66faa93a~tplv-photomode-image.jpeg?dr=9616&x-expires=1789264800&x-signature=GU%2BqBBacnB%2BBPTKgd5MOdtsU0zc%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=9b759fb9&idc=useast5&ftpl=1",
+     "https://p19-common-sign.tiktokcdn-us.com/tos-useast5-i-photomode-tx/69bab576407e4775aea7a25f66faa93a~tplv-photomode-image.jpeg?dr=9616&x-expires=1789264800&x-signature=rol5CvWm61XIZtup%2BWXN2sDq5QM%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=9b759fb9&idc=useast5&ftpl=1"
+    ]
+   },
+   "imageWidth": 1170,
+   "imageHeight": 1170
+  },
+  "shareCover": {
+   "imageURL": {
+    "urlList": [
+     "https://p16-common-sign.tiktokcdn-us.com/tos-useast5-i-photomode-tx/69bab576407e4775aea7a25f66faa93a~tplv-photomode-video-share-card:630:630:20.jpeg?dr=9616&refresh_token=abd36e3b&x-expires=1820628000&x-signature=CXXLzakYGRK5lqwVlPK%2B3V3nGd4%3D&t=4d5b0474&ps=13740610&shp=55bbe6a9&shcp=f07906a3&idc=useast5&ftpl=1"
+    ]
+   }
+  },
+  "title": ""
+ }
+}
